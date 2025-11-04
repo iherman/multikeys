@@ -31,7 +31,7 @@ node_modules/
 
 .Attic/
 
-ide 
+ide
 oda
 lopikula
 nami
@@ -44,3 +44,5 @@ multikey_webcrypto.ts
 !docs/~/
 !docs/lib/*/~
 !docs/lib/*/~/
+
+.editorconfig
