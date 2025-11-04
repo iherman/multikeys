@@ -16,8 +16,7 @@ import {
     preambleToCryptoData
 } from "./common.ts";
 
-// deno-lint-ignore no-import-prefix
-import { base64urlnopad as base64, base58 } from "npm:@scure/base@2.0.0";
+import { base64urlnopad as base64, base58 } from "@scure/base";
 
 /****************************************************************************************/
 /* The real converter functions                                                         */

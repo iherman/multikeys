@@ -1,6 +1,11 @@
-import { build, emptyDir } from "jsr:@deno/dnt";
+import { build, emptyDir } from "@deno/dnt";
+import { parse }           from "@std/jsonc";
 
-const deno_json = JSON.parse(Deno.readTextFileSync("deno.json"));
+const deno_json: any = parse(Deno.readTextFileSync("deno.jsonc"));
+
+if (deno_json === null) {
+    throw new Error("Did not find the deno.jsonc package file!")
+}
 
 await emptyDir("./.npm");
 
@@ -11,7 +16,7 @@ await build({
         // see JS docs for overview and more options
         deno: true,
     },
-    importMap: "deno.json",
+    importMap: "deno.jsonc",
     package: {
         // package.json properties
         name: "multikey-webcrypto",

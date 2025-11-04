@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-import-prefix
 /**
  * Base conversion functions for ECDSA. The Multikey definition requires the usage of a compressed public key
  * which must be compressed when creating the Multikey representation, and decompressed for the JWK conversion.
@@ -13,8 +12,8 @@
  */
 
 import { type JWKKeyPair, type MultikeyBinary, CryptoCurves } from "./common.ts";
-import { base64urlnopad as base64 }                           from "npm:@scure/base@2.0.0";
-import { p384, p256 }                                         from 'npm:@noble/curves@2.0.1/nist.js';
+import { base64urlnopad as base64 }                           from "@scure/base";
+import { p384, p256 }                                         from "@noble/curves/nist";
 
 /**
  * Convert the Crypto values from JWK to the equivalent Multikey Pairs' binary data.

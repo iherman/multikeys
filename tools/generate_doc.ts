@@ -10,9 +10,10 @@ the documentation served properly via a GitHub page.
 I hope that, at some point, this tools will become unnecessary, and `deno doc`
 will be comparable to, say, typedoc...
 **************************************************************************** */
-
 // Some data are picked from deno.json...
-const deno_json = JSON.parse(Deno.readTextFileSync("deno.json"));
+import { parse } from "@std/jsonc";
+const deno_json: any = parse(Deno.readTextFileSync("deno.jsonc"));
+if (deno_json === null) throw new Error("Did not find the deno.jsonc package file!")
 
 /* These entry may have to be adapted to the local requirements */
 const README: string       = "README.md";

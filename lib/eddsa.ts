@@ -8,7 +8,7 @@
  * @module
  */
 import type { JWKKeyPair, MultikeyBinary, CryptoCurves } from "./common.ts";
-import { base64urlnopad as base64 }                      from "npm:@scure/base@2.0.0";
+import { base64urlnopad as base64 }                      from "@scure/base";
 
 /**
  * Convert the Crypto values from JWK to the equivalent Multikey Pairs' binary data.
