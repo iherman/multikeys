@@ -13,23 +13,24 @@ import {
     ECDSACurves,
     type MultikeyBinary,
     classToPreamble, classToDecoder, classToEncoder,
-    preambleToCryptoData 
+    preambleToCryptoData
 } from "./common.ts";
 
-import { base64urlnopad as base64, base58 } from "npm:@scure/base@1.2.5";
+// deno-lint-ignore no-import-prefix
+import { base64urlnopad as base64, base58 } from "npm:@scure/base@2.0.0";
 
 /****************************************************************************************/
 /* The real converter functions                                                         */
 /****************************************************************************************/
 /**
  * Generic function to convert a multikey pair to JWK. This function decodes the multikey data
- * into a binary buffer, checks the preambles and invokes the crypto curve specific converter functions 
+ * into a binary buffer, checks the preambles and invokes the crypto curve specific converter functions
  * (depending on the preamble values) that do the final conversion from the binary data to JWK.
- * 
+ *
  * Works for ecdsa (both P-384 and P-256), and eddsa.
- * 
- * @param keys 
- * @returns 
+ *
+ * @param keys
+ * @returns
  * @throws - exceptions if something is incorrect in the incoming data
  */
 export function multikeyToJWK(keys: Multikey): JWKKeyPair {
@@ -38,7 +39,7 @@ export function multikeyToJWK(keys: Multikey): JWKKeyPair {
         preamble:  Preamble<number>,
         keyBinary: Uint8Array;
     }
-    // Separate the preamble of a multikey from the key value. By doing so, 
+    // Separate the preamble of a multikey from the key value. By doing so,
     // the initial 'z' value is also removed.
     const convertBinary = (key: Multibase): MultikeyData => {
         // Check whether the first character is a 'z' before removing it
@@ -61,7 +62,7 @@ export function multikeyToJWK(keys: Multikey): JWKKeyPair {
         throw new Error(`"${keys.publicKeyMultibase}" has the wrong preamble (should refer to a public key).`);
     }
 
-    // Get hold of the curve specific converter function that will do the real work on the binary 
+    // Get hold of the curve specific converter function that will do the real work on the binary
     // data
     const converter = classToDecoder[publicData.crCurve];
 
@@ -88,14 +89,14 @@ export function multikeyToJWK(keys: Multikey): JWKKeyPair {
 /**
  * Convert JWK Key pair to Multikeys. This function decodes the JWK keys, finds out which binary key it encodes
  * and converts the key to the multikey versions depending on the exact curve.
- * 
+ *
  * Note that the code does not check (yet?) all combination of the JWK pairs where they would be erroneous, only
  * those that would lead to error in this cose. E.g., it does not check whether the x (and possibly y) values
  * are identical in the secret and private JWK keys.
- * 
+ *
  * Works for ecdsa (both P-384 and P-256), and eddsa.
 
- * @param keys 
+ * @param keys
  */
 export function JWKToMultikey(keys: JWKKeyPair): Multikey {
     // Internal function for the common last step of encoding a multikey
@@ -147,13 +148,13 @@ export function JWKToMultikey(keys: JWKKeyPair): Multikey {
     }
 
     // The cryptokey values are x, y (for ecdsa), and d (for the secret key).
-    // Each of these are base 64 encoded strings; what we need is the 
+    // Each of these are base 64 encoded strings; what we need is the
     // binary versions thereof.
     const x: Uint8Array | undefined = decodeJWKField(keys.publicKey.x);
     if (x === undefined) {
         throw new Error(`x value is missing from public key (${JSON.stringify(keys.publicKey)})`);
     }
- 
+
     const y: Uint8Array | undefined = decodeJWKField(keys.publicKey.y);
     if (ECDSACurves.includes(publicKeyCurve) && y === undefined) {
         throw new Error(`y value is missing from the ECDSA public key (${JSON.stringify(keys.publicKey)})`);

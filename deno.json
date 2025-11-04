@@ -1,7 +1,7 @@
 {
   "name": "@iherman/multikey-webcrypto",
-  "version": "0.6.1",
-  "date": "2025-05-14",
+  "version": "0.6.2",
+  "date": "2025-11-04",
   "description": "Conversions to and from multikeys and WebCrypto, using the three EC curves defined for Verifiable Credentials.",
   "tasks": {
     "docs": {
