@@ -19,7 +19,7 @@ await build({
     importMap: "deno.jsonc",
     package: {
         // package.json properties
-        name: "multikey-webcrypto",
+        name: "@iherman/multikey-webcrypto",
         version: deno_json.version,
         date: deno_json.date,
         description: deno_json.description,

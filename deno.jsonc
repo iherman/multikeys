@@ -13,7 +13,8 @@
             "command": "deno run -A tools/build_npm.ts"
         },
         "quick_test": "deno test --reporter=dot tools/",
-        "test": "deno test tools/"
+        "test": "deno test tools/",
+        "publish_npm": "(cd .npm; npm publish --access=public)"
     },
     "author": "Ivan Herman <ivan@w3.org> (https://www.w3.org/People/Ivan/)",
     "license": "W3C-20230101",
